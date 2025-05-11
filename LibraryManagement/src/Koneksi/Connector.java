@@ -10,7 +10,7 @@ public class Connector {
     public static Connection connection(){
         if(conn == null){
             MysqlDataSource database = new MysqlDataSource();
-            database.setDatabaseName("");
+            database.setDatabaseName("ambaperpus");
             database.setUser("root");
             database.setPassword("");
             
