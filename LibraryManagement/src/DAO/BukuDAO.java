@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 public class BukuDAO implements BukuImplement{
     Connection connection;
     final String selectQuery = "SELECT * FROM buku";
-    final String insertQuery = "INSERT INTO buku (judul, penulis, penerbit) VALUES (?, ?, ?);";
+    final String insertQuery = "INSERT INTO buku (JudulBuku, PenulisBuku, PenerbitBuku) VALUES (?, ?, ?);";
+    final String updateQuery = "UPDATE buku SET JudulBuku = ?, PenulisBuku = ?, PenerbitBuku = ? WHERE IdBuku = ?";
 
     public BukuDAO() {
         connection = Connector.connection();
@@ -46,7 +47,25 @@ public class BukuDAO implements BukuImplement{
 
     @Override
     public void editBuku(BukuModel dataBuku) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement Preparedstatement = null;
+        try {
+            Preparedstatement = connection.prepareStatement(updateQuery);
+            Preparedstatement.setString(1, dataBuku.getJudul());
+            Preparedstatement.setString(2, dataBuku.getPenulis());
+            Preparedstatement.setString(3, dataBuku.getPenerbit());
+            Preparedstatement.setInt(4, dataBuku.getId());
+            Preparedstatement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally{
+            try {
+                Preparedstatement.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -65,10 +84,10 @@ public class BukuDAO implements BukuImplement{
             
             while(result.next()){
                 BukuModel buku = new BukuModel();
-                buku.setId(result.getInt("id"));
-                buku.setJudul(result.getString("judul"));
-                buku.setPenulis(result.getString("penulis"));
-                buku.setPenerbit(result.getString("penerbit"));
+                buku.setId(result.getInt("IdBuku"));
+                buku.setJudul(result.getString("JudulBuku"));
+                buku.setPenulis(result.getString("PenulisBuku"));
+                buku.setPenerbit(result.getString("PenerbitBuku"));
                 
                 dataBuku.add(buku);
             }

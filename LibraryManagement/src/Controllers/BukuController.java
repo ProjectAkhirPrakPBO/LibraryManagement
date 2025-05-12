@@ -30,7 +30,18 @@ public class BukuController {
         buku.setPenulis(bukuFrame.getTxtPenulis().getText());
         buku.setPenerbit(bukuFrame.getTxtPenerbit().getText());
         
+        
         implementBuku.tambahBuku(buku);
     }
     
+    public void updateDataTabel(){
+        BukuModel buku = new BukuModel();
+       
+        buku.setId(Integer.parseInt(bukuFrame.getTxtID().getText()));
+        buku.setJudul(bukuFrame.getTxtJudul().getText());
+        buku.setPenulis(bukuFrame.getTxtPenulis().getText());
+        buku.setPenerbit(bukuFrame.getTxtPenerbit().getText());
+        
+        implementBuku.editBuku(buku);
+    }
 }

@@ -36,6 +36,7 @@ public class BukuView extends javax.swing.JFrame {
         txtPenulis = new javax.swing.JTextField();
         txtPenerbit = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +75,11 @@ public class BukuView extends javax.swing.JFrame {
                 "ID", "Judul", "Penulis", "Penerbit"
             }
         ));
+        tabelDataBuku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelDataBukuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelDataBuku);
 
         jLabel2.setText("ID");
@@ -98,6 +104,13 @@ public class BukuView extends javax.swing.JFrame {
             }
         });
 
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,7 +130,9 @@ public class BukuView extends javax.swing.JFrame {
                     .addComponent(txtPenulis)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSimpan)
-                        .addGap(0, 107, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEdit)
+                        .addGap(0, 13, Short.MAX_VALUE))
                     .addComponent(txtPenerbit))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +161,9 @@ public class BukuView extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(txtPenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSimpan))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSimpan)
+                            .addComponent(btnEdit)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -165,6 +182,20 @@ public class BukuView extends javax.swing.JFrame {
         controllerBuku.loadDataTabel();
         clearField();
     }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void tabelDataBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDataBukuMouseClicked
+        int row = tabelDataBuku.getSelectedRow();
+        txtID.setText(tabelDataBuku.getValueAt(row, 0).toString());
+        txtJudul.setText(tabelDataBuku.getValueAt(row, 1).toString());
+        txtPenulis.setText(tabelDataBuku.getValueAt(row, 2).toString());
+        txtPenerbit.setText(tabelDataBuku.getValueAt(row, 3).toString());
+    }//GEN-LAST:event_tabelDataBukuMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        controllerBuku.updateDataTabel();
+        controllerBuku.loadDataTabel();
+        clearField();
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +233,7 @@ public class BukuView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
