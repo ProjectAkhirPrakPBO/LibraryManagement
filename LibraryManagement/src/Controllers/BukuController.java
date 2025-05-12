@@ -4,6 +4,7 @@ import DAOImplements.BukuImplement;
 import Models.*;
 import Views.BukuView;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /* @author aliad */
 public class BukuController {
@@ -30,8 +31,14 @@ public class BukuController {
         buku.setPenulis(bukuFrame.getTxtPenulis().getText());
         buku.setPenerbit(bukuFrame.getTxtPenerbit().getText());
         
-        
-        implementBuku.tambahBuku(buku);
+        if ((buku.getJudul()).equals("") || (buku.getPenulis()).equals("") || (buku.getPenerbit()).equals("")) {
+            JOptionPane.showMessageDialog(bukuFrame, "Isi Lengkap Data Terlebih Dahulu");
+            return;
+        }
+        else {
+            implementBuku.tambahBuku(buku);
+            JOptionPane.showMessageDialog(bukuFrame, "Data Buku Berhasil Ditambahkan");
+        }
     }
     
     public void updateDataTabel(){
@@ -42,6 +49,13 @@ public class BukuController {
         buku.setPenulis(bukuFrame.getTxtPenulis().getText());
         buku.setPenerbit(bukuFrame.getTxtPenerbit().getText());
         
-        implementBuku.editBuku(buku);
+        if ( (buku.getId()) == 0 || (buku.getJudul()).equals("") || (buku.getPenulis()).equals("") || (buku.getPenerbit()).equals("")) {
+            JOptionPane.showMessageDialog(bukuFrame, "Isi Field Data Terlebih Dahulu");
+            return;
+        }
+        else {
+            implementBuku.editBuku(buku);
+            JOptionPane.showMessageDialog(bukuFrame, "Data Buku Berhasil Diedit");
+        }
     }
 }
