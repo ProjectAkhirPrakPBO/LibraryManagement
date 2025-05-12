@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public class BukuDAO implements BukuImplement{
     Connection connection;
     final String selectQuery = "SELECT * FROM buku";
+    final String insertQuery = "INSERT INTO buku (judul, penulis, penerbit) VALUES (?, ?, ?);";
 
     public BukuDAO() {
         connection = Connector.connection();
@@ -18,7 +19,29 @@ public class BukuDAO implements BukuImplement{
     
     @Override
     public void tambahBuku(BukuModel dataBuku) {
+        PreparedStatement prepStatement = null;
         
+        try {
+            prepStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            prepStatement.setString(1, dataBuku.getJudul());
+            prepStatement.setString(2, dataBuku.getPenulis());
+            prepStatement.setString(3, dataBuku.getPenerbit());
+            prepStatement.executeUpdate();
+            
+            ResultSet result = prepStatement.getGeneratedKeys();
+            while (result.next()){
+                dataBuku.setId(result.getInt(1));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally{
+            try {
+                prepStatement.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override

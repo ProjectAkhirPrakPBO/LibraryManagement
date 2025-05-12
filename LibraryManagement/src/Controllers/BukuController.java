@@ -23,4 +23,14 @@ public class BukuController {
         bukuFrame.getTabelDataBuku().setModel(bukuTblModel);
     }
     
+    public void insertDataTabel(){
+        BukuModel buku = new BukuModel();
+        
+        buku.setJudul(bukuFrame.getTxtJudul().getText());
+        buku.setPenulis(bukuFrame.getTxtPenulis().getText());
+        buku.setPenerbit(bukuFrame.getTxtPenerbit().getText());
+        
+        implementBuku.tambahBuku(buku);
+    }
+    
 }
