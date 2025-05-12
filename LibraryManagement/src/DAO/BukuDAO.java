@@ -13,6 +13,7 @@ public class BukuDAO implements BukuImplement{
     final String selectQuery = "SELECT * FROM buku";
     final String insertQuery = "INSERT INTO buku (JudulBuku, PenulisBuku, PenerbitBuku) VALUES (?, ?, ?);";
     final String updateQuery = "UPDATE buku SET JudulBuku = ?, PenulisBuku = ?, PenerbitBuku = ? WHERE IdBuku = ?";
+    final String deleteQuery = "DELETE FROM buku WHERE IdBuku = ?";
 
     public BukuDAO() {
         connection = Connector.connection();
@@ -47,21 +48,21 @@ public class BukuDAO implements BukuImplement{
 
     @Override
     public void editBuku(BukuModel dataBuku) {
-        PreparedStatement Preparedstatement = null;
+        PreparedStatement prepStatement = null;
         try {
-            Preparedstatement = connection.prepareStatement(updateQuery);
-            Preparedstatement.setString(1, dataBuku.getJudul());
-            Preparedstatement.setString(2, dataBuku.getPenulis());
-            Preparedstatement.setString(3, dataBuku.getPenerbit());
-            Preparedstatement.setInt(4, dataBuku.getId());
-            Preparedstatement.executeUpdate();
+            prepStatement = connection.prepareStatement(updateQuery);
+            prepStatement.setString(1, dataBuku.getJudul());
+            prepStatement.setString(2, dataBuku.getPenulis());
+            prepStatement.setString(3, dataBuku.getPenerbit());
+            prepStatement.setInt(4, dataBuku.getId());
+            prepStatement.executeUpdate();
             
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         finally{
             try {
-                Preparedstatement.close();
+                prepStatement.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -69,8 +70,22 @@ public class BukuDAO implements BukuImplement{
     }
 
     @Override
-    public void hapusBuku(int idBuku) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void hapusBuku(int idDeleteBuku) {
+        PreparedStatement prepStatement = null;
+        try {
+            prepStatement = connection.prepareStatement(deleteQuery);
+            prepStatement.setInt(1, idDeleteBuku);
+            prepStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally{
+            try {
+                prepStatement.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override

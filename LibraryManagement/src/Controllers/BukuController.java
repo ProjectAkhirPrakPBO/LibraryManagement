@@ -58,4 +58,14 @@ public class BukuController {
             JOptionPane.showMessageDialog(bukuFrame, "Data Buku Berhasil Diedit");
         }
     }
+    
+    public void deleteDataTabel(){
+        int idBuku = Integer.parseInt(bukuFrame.getTxtID().getText());
+        
+        int confirmDelete = JOptionPane.showConfirmDialog(bukuFrame, "Apakah Anda Yakin Untuk Menghapus Buku ini ? ");
+       
+        if (confirmDelete == JOptionPane.YES_OPTION) {
+            implementBuku.hapusBuku(idBuku);
+        }
+    }
 }
